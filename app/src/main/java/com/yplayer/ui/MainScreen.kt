@@ -28,6 +28,7 @@ import com.yplayer.ui.screens.albumdetail.AlbumDetailScreen
 import com.yplayer.ui.screens.albums.AlbumsScreen
 import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
 import com.yplayer.ui.screens.artists.ArtistsScreen
+import com.yplayer.ui.screens.nowplaying.NowPlayingScreen
 import com.yplayer.ui.screens.songs.SongsScreen
 
 private data class TabItem(val route: String, val label: String, val icon: ImageVector)
@@ -114,7 +115,7 @@ fun MainScreen() {
                         onSongClick = { index -> navController.navigate("nowPlaying") },
                     )
                 }
-                composable("nowPlaying") { /* replaced in Task 6 */ }
+                composable("nowPlaying") { NowPlayingScreen() }
             }
         }
     }

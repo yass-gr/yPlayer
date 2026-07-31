@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class FakePlaybackController : PlaybackController {
+open class FakePlaybackController : PlaybackController {
     override val state: StateFlow<PlayerState> = MutableStateFlow(PlayerState()).asStateFlow()
 
     var lastQueue: List<Song>? = null

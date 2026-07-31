@@ -2355,7 +2355,7 @@ git commit -m "add album and artist detail screens"
 - Test: `app/src/test/java/com/yplayer/player/MediaItemMapperTest.kt`
 - Test: `app/src/test/java/com/yplayer/ui/screens/nowplaying/NowPlayingViewModelTest.kt`
 
-- [ ] **Step 1: Write the failing tests**
+- [x] **Step 1: Write the failing tests**
 
 `app/src/test/java/com/yplayer/player/MediaItemMapperTest.kt`:
 ```kotlin
@@ -2472,7 +2472,7 @@ class NowPlayingViewModelTest {
 }
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 ```bash
 ./gradlew :app:testDebugUnitTest --tests "com.yplayer.player.MediaItemMapperTest" --tests "com.yplayer.ui.screens.nowplaying.NowPlayingViewModelTest"
@@ -2480,7 +2480,7 @@ class NowPlayingViewModelTest {
 
 Expected: FAIL — `toMediaItem`, `toSong`, `NowPlayingViewModel` don't exist.
 
-- [ ] **Step 3: Write the media item mapper**
+- [x] **Step 3: Write the media item mapper**
 
 `app/src/main/java/com/yplayer/player/MediaItemMapper.kt`:
 ```kotlin
@@ -2520,7 +2520,7 @@ fun MediaItem.toSong(): Song {
 }
 ```
 
-- [ ] **Step 4: Write the playback service**
+- [x] **Step 4: Write the playback service**
 
 `app/src/main/java/com/yplayer/player/PlaybackService.kt`:
 ```kotlin
@@ -2557,7 +2557,7 @@ class PlaybackService : MediaSessionService() {
 }
 ```
 
-- [ ] **Step 5: Write the playback controller implementation**
+- [x] **Step 5: Write the playback controller implementation**
 
 `app/src/main/java/com/yplayer/player/PlaybackControllerImpl.kt`:
 ```kotlin
@@ -2687,7 +2687,7 @@ class PlaybackControllerImpl(context: Context) : PlaybackController, Player.List
 }
 ```
 
-- [ ] **Step 6: Wire the controller into `AppContainer`**
+- [x] **Step 6: Wire the controller into `AppContainer`**
 
 `AppContainer.kt`:
 ```kotlin
@@ -2705,7 +2705,7 @@ class AppContainer(private val app: Application) {
 }
 ```
 
-- [ ] **Step 7: Run tests to verify they pass**
+- [x] **Step 7: Run tests to verify they pass**
 
 ```bash
 ./gradlew :app:testDebugUnitTest --tests "com.yplayer.player.MediaItemMapperTest" --tests "com.yplayer.ui.screens.nowplaying.NowPlayingViewModelTest"
@@ -2713,7 +2713,7 @@ class AppContainer(private val app: Application) {
 
 Expected: PASS.
 
-- [ ] **Step 8: Write the Now Playing ViewModel + screen**
+- [x] **Step 8: Write the Now Playing ViewModel + screen**
 
 `app/src/main/java/com/yplayer/ui/screens/nowplaying/NowPlayingViewModel.kt`:
 ```kotlin
@@ -2901,7 +2901,7 @@ private fun formatTime(ms: Long): String {
 
 Note: remove the unused `width`/`height`/`Image`/`Row`-related imports if the compiler flags them (the `height(24.dp)` usage keeps `height`; delete `Image`, `width` if unused).
 
-- [ ] **Step 9: Wire the Now Playing route in `MainScreen`**
+- [x] **Step 9: Wire the Now Playing route in `MainScreen`**
 
 Replace the placeholder `composable("nowPlaying") { /* replaced in Task 6 */ }` with:
 ```kotlin
@@ -2909,7 +2909,7 @@ composable("nowPlaying") { NowPlayingScreen() }
 ```
 Import: `import com.yplayer.ui.screens.nowplaying.NowPlayingScreen`.
 
-- [ ] **Step 10: Build + run all unit tests**
+- [x] **Step 10: Build + run all unit tests**
 
 ```bash
 ./gradlew :app:assembleDebug :app:testDebugUnitTest
@@ -2925,7 +2925,7 @@ Expected: `BUILD SUCCESSFUL`, all unit tests PASS.
 
 Tap a song in the Songs tab. Expected: full-screen Now Playing opens, music plays, artwork shows, slider seeks, play/pause/next/previous work. Press home — Expected: media notification appears in the shade, and the music keeps playing. Grant notification permission if prompted.
 
-- [ ] **Step 12: Commit**
+- [x] **Step 12: Commit**
 
 ```bash
 git add -A
