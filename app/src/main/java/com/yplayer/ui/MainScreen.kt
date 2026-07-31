@@ -1,5 +1,6 @@
 package com.yplayer.ui
 
+import android.net.Uri
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -16,12 +17,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.yplayer.ui.screens.PlaylistsScreen
+import com.yplayer.ui.screens.albumdetail.AlbumDetailScreen
 import com.yplayer.ui.screens.albums.AlbumsScreen
+import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
 import com.yplayer.ui.screens.artists.ArtistsScreen
 import com.yplayer.ui.screens.songs.SongsScreen
 
@@ -66,9 +71,50 @@ fun MainScreen() {
                 modifier = Modifier.padding(padding),
             ) {
                 composable("songs") { SongsScreen() }
-                composable("albums") { AlbumsScreen() }
-                composable("artists") { ArtistsScreen() }
+                composable("albums") {
+                    AlbumsScreen(onAlbumClick = { album ->
+                        navController.navigate(
+                            "album/${album.id}/${Uri.encode(album.title)}/${Uri.encode(album.artist)}"
+                        )
+                    })
+                }
+                composable("artists") {
+                    ArtistsScreen(onArtistClick = { artist ->
+                        navController.navigate("artist/${Uri.encode(artist.name)}")
+                    })
+                }
                 composable("playlists") { PlaylistsScreen() }
+                composable(
+                    route = "album/{albumId}/{title}/{artist}",
+                    arguments = listOf(
+                        navArgument("albumId") { type = NavType.LongType },
+                        navArgument("title") { type = NavType.StringType },
+                        navArgument("artist") { type = NavType.StringType },
+                    ),
+                ) { entry ->
+                    val albumId = entry.arguments?.getLong("albumId") ?: 0L
+                    val title = entry.arguments?.getString("title") ?: ""
+                    val artist = entry.arguments?.getString("artist") ?: ""
+                    AlbumDetailScreen(
+                        albumId = albumId,
+                        albumTitle = title,
+                        albumArtist = artist,
+                        onBack = { navController.popBackStack() },
+                        onSongClick = { index -> navController.navigate("nowPlaying") },
+                    )
+                }
+                composable(
+                    route = "artist/{name}",
+                    arguments = listOf(navArgument("name") { type = NavType.StringType }),
+                ) { entry ->
+                    val name = entry.arguments?.getString("name") ?: ""
+                    ArtistDetailScreen(
+                        artistName = name,
+                        onBack = { navController.popBackStack() },
+                        onSongClick = { index -> navController.navigate("nowPlaying") },
+                    )
+                }
+                composable("nowPlaying") { /* replaced in Task 6 */ }
             }
         }
     }

@@ -1816,7 +1816,7 @@ git commit -m "add songs, albums, artists screens with permissions"
 - Test: `app/src/test/java/com/yplayer/ui/screens/albumdetail/AlbumDetailViewModelTest.kt`
 - Test: `app/src/test/java/com/yplayer/ui/screens/artistdetail/ArtistDetailViewModelTest.kt`
 
-- [ ] **Step 1: Write the failing ViewModel tests**
+- [x] **Step 1: Write the failing ViewModel tests**
 
 `app/src/test/java/com/yplayer/ui/screens/albumdetail/AlbumDetailViewModelTest.kt`:
 ```kotlin
@@ -1948,7 +1948,7 @@ class ArtistDetailViewModelTest {
 }
 ```
 
-- [ ] **Step 2: Run tests to verify they fail**
+- [x] **Step 2: Run tests to verify they fail**
 
 ```bash
 ./gradlew :app:testDebugUnitTest --tests "com.yplayer.ui.screens.albumdetail.AlbumDetailViewModelTest" --tests "com.yplayer.ui.screens.artistdetail.ArtistDetailViewModelTest"
@@ -1956,7 +1956,7 @@ class ArtistDetailViewModelTest {
 
 Expected: FAIL — ViewModels don't exist.
 
-- [ ] **Step 3: Write the ViewModels**
+- [x] **Step 3: Write the ViewModels**
 
 `app/src/main/java/com/yplayer/ui/screens/albumdetail/AlbumDetailViewModel.kt`:
 ```kotlin
@@ -2030,7 +2030,7 @@ class ArtistDetailViewModel(
 }
 ```
 
-- [ ] **Step 4: Run tests to verify they pass**
+- [x] **Step 4: Run tests to verify they pass**
 
 ```bash
 ./gradlew :app:testDebugUnitTest --tests "com.yplayer.ui.screens.albumdetail.AlbumDetailViewModelTest" --tests "com.yplayer.ui.screens.artistdetail.ArtistDetailViewModelTest"
@@ -2038,7 +2038,7 @@ class ArtistDetailViewModel(
 
 Expected: PASS.
 
-- [ ] **Step 5: Extract a reusable song list component**
+- [x] **Step 5: Extract a reusable song list component**
 
 `app/src/main/java/com/yplayer/ui/components/SongList.kt`:
 ```kotlin
@@ -2104,7 +2104,7 @@ fun SongRow(song: Song, onClick: () -> Unit) {
 
 Update `SongsScreen.kt` to use `SongList(songs = songs, onSongClick = onSongClick)` and delete its private `SongRow` (remove the now-unused `Row`/`AlbumArt`/`Song` imports as needed).
 
-- [ ] **Step 6: Write the detail screens**
+- [x] **Step 6: Write the detail screens**
 
 `app/src/main/java/com/yplayer/ui/screens/albumdetail/AlbumDetailScreen.kt`:
 ```kotlin
@@ -2264,7 +2264,7 @@ fun ArtistDetailScreen(
 }
 ```
 
-- [ ] **Step 7: Add routes to `MainScreen`**
+- [x] **Step 7: Add routes to `MainScreen`**
 
 In the `NavHost`, add:
 ```kotlin
@@ -2326,7 +2326,7 @@ import com.yplayer.ui.screens.albumdetail.AlbumDetailScreen
 import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
 ```
 
-- [ ] **Step 8: Build + run unit tests**
+- [x] **Step 8: Build + run unit tests**
 
 ```bash
 ./gradlew :app:assembleDebug :app:testDebugUnitTest
@@ -2334,7 +2334,7 @@ import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
 
 Expected: `BUILD SUCCESSFUL`, all unit tests PASS.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A
