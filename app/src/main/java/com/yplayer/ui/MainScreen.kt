@@ -23,12 +23,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.yplayer.ui.screens.PlaylistsScreen
 import com.yplayer.ui.screens.albumdetail.AlbumDetailScreen
 import com.yplayer.ui.screens.albums.AlbumsScreen
 import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
 import com.yplayer.ui.screens.artists.ArtistsScreen
 import com.yplayer.ui.screens.nowplaying.NowPlayingScreen
+import com.yplayer.ui.screens.playlistdetail.PlaylistDetailScreen
+import com.yplayer.ui.screens.playlists.PlaylistsScreen
 import com.yplayer.ui.screens.songs.SongsScreen
 
 private data class TabItem(val route: String, val label: String, val icon: ImageVector)
@@ -84,7 +85,11 @@ fun MainScreen() {
                         navController.navigate("artist/${Uri.encode(artist.name)}")
                     })
                 }
-                composable("playlists") { PlaylistsScreen() }
+                composable("playlists") {
+                    PlaylistsScreen(onPlaylistClick = { playlist ->
+                        navController.navigate("playlist/${playlist.id}/${Uri.encode(playlist.name)}")
+                    })
+                }
                 composable(
                     route = "album/{albumId}/{title}/{artist}",
                     arguments = listOf(
@@ -116,6 +121,21 @@ fun MainScreen() {
                     )
                 }
                 composable("nowPlaying") { NowPlayingScreen() }
+                composable(
+                    route = "playlist/{playlistId}/{name}",
+                    arguments = listOf(
+                        navArgument("playlistId") { type = NavType.LongType },
+                        navArgument("name") { type = NavType.StringType },
+                    ),
+                ) { entry ->
+                    val playlistId = entry.arguments?.getLong("playlistId") ?: 0L
+                    val name = entry.arguments?.getString("name") ?: ""
+                    PlaylistDetailScreen(
+                        playlistId = playlistId,
+                        playlistName = name,
+                        onBack = { navController.popBackStack() },
+                    )
+                }
             }
         }
     }
