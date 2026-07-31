@@ -7,11 +7,15 @@ import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.filled.QueueMusic
 import androidx.compose.material.icons.filled.Album
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -30,6 +34,7 @@ import com.yplayer.ui.screens.artists.ArtistsScreen
 import com.yplayer.ui.screens.nowplaying.NowPlayingScreen
 import com.yplayer.ui.screens.playlistdetail.PlaylistDetailScreen
 import com.yplayer.ui.screens.playlists.PlaylistsScreen
+import com.yplayer.ui.screens.search.SearchScreen
 import com.yplayer.ui.screens.songs.SongsScreen
 
 private data class TabItem(val route: String, val label: String, val icon: ImageVector)
@@ -41,14 +46,28 @@ private val tabs = listOf(
     TabItem("playlists", "Playlists", Icons.AutoMirrored.Filled.QueueMusic),
 )
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen() {
     val navController = rememberNavController()
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntry?.destination?.route
+    val isTopLevel = currentRoute in tabs.map { it.route }
     Scaffold(
+        topBar = {
+            if (isTopLevel) {
+                TopAppBar(
+                    title = { Text("yPlayer") },
+                    actions = {
+                        IconButton(onClick = { navController.navigate("search") }) {
+                            Icon(Icons.Filled.Search, contentDescription = "Search")
+                        }
+                    },
+                )
+            }
+        },
         bottomBar = {
             NavigationBar {
-                val backStackEntry by navController.currentBackStackEntryAsState()
-                val currentRoute = backStackEntry?.destination?.route
                 tabs.forEach { tab ->
                     NavigationBarItem(
                         selected = currentRoute == tab.route,
@@ -89,6 +108,12 @@ fun MainScreen() {
                     PlaylistsScreen(onPlaylistClick = { playlist ->
                         navController.navigate("playlist/${playlist.id}/${Uri.encode(playlist.name)}")
                     })
+                }
+                composable("search") {
+                    SearchScreen(
+                        onBack = { navController.popBackStack() },
+                        onSongClick = { navController.navigate("nowPlaying") },
+                    )
                 }
                 composable(
                     route = "album/{albumId}/{title}/{artist}",
