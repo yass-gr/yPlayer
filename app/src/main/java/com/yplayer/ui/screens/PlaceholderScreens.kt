@@ -8,15 +8,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SongsScreen() = CenteredPlaceholder("Songs placeholder")
-
-@Composable
-fun AlbumsScreen() = CenteredPlaceholder("Albums placeholder")
-
-@Composable
-fun ArtistsScreen() = CenteredPlaceholder("Artists placeholder")
-
-@Composable
 fun PlaylistsScreen() = CenteredPlaceholder("Playlists placeholder")
 
 @Composable

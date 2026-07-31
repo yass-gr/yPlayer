@@ -20,10 +20,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.yplayer.ui.screens.AlbumsScreen
-import com.yplayer.ui.screens.ArtistsScreen
 import com.yplayer.ui.screens.PlaylistsScreen
-import com.yplayer.ui.screens.SongsScreen
+import com.yplayer.ui.screens.albums.AlbumsScreen
+import com.yplayer.ui.screens.artists.ArtistsScreen
+import com.yplayer.ui.screens.songs.SongsScreen
 
 private data class TabItem(val route: String, val label: String, val icon: ImageVector)
 
@@ -59,15 +59,17 @@ fun MainScreen() {
             }
         },
     ) { padding ->
-        NavHost(
-            navController = navController,
-            startDestination = "songs",
-            modifier = Modifier.padding(padding),
-        ) {
-            composable("songs") { SongsScreen() }
-            composable("albums") { AlbumsScreen() }
-            composable("artists") { ArtistsScreen() }
-            composable("playlists") { PlaylistsScreen() }
+        MusicPermissionGate {
+            NavHost(
+                navController = navController,
+                startDestination = "songs",
+                modifier = Modifier.padding(padding),
+            ) {
+                composable("songs") { SongsScreen() }
+                composable("albums") { AlbumsScreen() }
+                composable("artists") { ArtistsScreen() }
+                composable("playlists") { PlaylistsScreen() }
+            }
         }
     }
 }
