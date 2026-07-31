@@ -16,7 +16,7 @@
 - **Java:** OpenJDK 17. **No Gradle binary installed** — Gradle is bootstrapped via the wrapper in Task 1.
 - **Connected device:** `C6MB796XTOBQ8TGQ` present but `unauthorized`. **The user must accept the USB-debugging prompt on the phone** (or the phone must be reconnected and re-authorized) before any `installDebug` or instrumented-test step. If no device is available, `installDebug`/`connectedDebugAndroidTest` steps are skipped and marked manually.
 - **No AVDs exist.** Emulator binary is present but no system image/cmdline-tools — creating AVDs is out of scope for this plan; all automated tests are JVM unit tests except one optional `androidTest` suite that requires an authorized device.
-- All commits are conventional (no tracker configured; no remote).
+- All commits use plain unprefixed messages (no `feat:`/`docs:` types, no ticket prefixes).
 
 ---
 
@@ -403,7 +403,7 @@ Expected: `BUILD SUCCESSFUL` and `app/build/outputs/apk/debug/app-debug.apk` exi
 
 ```bash
 git add -A
-git commit -m "feat: bootstrap gradle project scaffolding"
+git commit -m "bootstrap gradle project scaffolding"
 ```
 
 ---
@@ -667,7 +667,7 @@ Expected: `NavigationTest.bottomNavSwitchesBetweenTabs` passes. If no device is 
 
 ```bash
 git add -A
-git commit -m "feat: add theme and bottom-tab navigation shell"
+git commit -m "add theme and bottom-tab navigation shell"
 ```
 
 ---
@@ -966,7 +966,7 @@ class AppContainer(private val app: Application) {
 
 ```bash
 git add -A
-git commit -m "feat: add library repository over MediaStore"
+git commit -m "add library repository over MediaStore"
 ```
 
 ---
@@ -1799,7 +1799,7 @@ Open the app on the phone. Expected: permission prompt appears; after granting, 
 
 ```bash
 git add -A
-git commit -m "feat: add songs, albums, artists screens with permissions"
+git commit -m "add songs, albums, artists screens with permissions"
 ```
 
 ---
@@ -2338,7 +2338,7 @@ Expected: `BUILD SUCCESSFUL`, all unit tests PASS.
 
 ```bash
 git add -A
-git commit -m "feat: add album and artist detail screens"
+git commit -m "add album and artist detail screens"
 ```
 
 ---
@@ -2929,7 +2929,7 @@ Tap a song in the Songs tab. Expected: full-screen Now Playing opens, music play
 
 ```bash
 git add -A
-git commit -m "feat: add media3 playback service and now playing screen"
+git commit -m "add media3 playback service and now playing screen"
 ```
 
 ---
@@ -3294,7 +3294,7 @@ Expected: PASS (7 tests).
 
 ```bash
 git add -A
-git commit -m "feat: add room playlist schema and repository"
+git commit -m "add room playlist schema and repository"
 ```
 
 ---
@@ -4043,7 +4043,7 @@ Expected: Playlists tab lists playlists; FAB creates one; tapping opens the deta
 
 ```bash
 git add -A
-git commit -m "feat: add playlists list and detail screens"
+git commit -m "add playlists list and detail screens"
 ```
 
 ---
@@ -4396,7 +4396,7 @@ Expected: `NavigationTest` and `SearchUiTest` pass. Skip if no device is availab
 
 ```bash
 git add -A
-git commit -m "feat: add search screen"
+git commit -m "add search screen"
 ```
 
 ---
@@ -4537,7 +4537,7 @@ Verify the full loop:
 
 ```bash
 git add -A
-git commit -m "feat: polish empty states and library refresh"
+git commit -m "polish empty states and library refresh"
 ```
 
 ---
