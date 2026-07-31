@@ -1,0 +1,3 @@
+<resources>
+    <style name="Theme.YPlayer" parent="android:Theme.Material.NoActionBar" />
+</resources>
