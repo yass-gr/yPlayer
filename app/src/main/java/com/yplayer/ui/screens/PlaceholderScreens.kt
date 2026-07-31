@@ -1,0 +1,27 @@
+package com.yplayer.ui.screens
+
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+
+@Composable
+fun SongsScreen() = CenteredPlaceholder("Songs placeholder")
+
+@Composable
+fun AlbumsScreen() = CenteredPlaceholder("Albums placeholder")
+
+@Composable
+fun ArtistsScreen() = CenteredPlaceholder("Artists placeholder")
+
+@Composable
+fun PlaylistsScreen() = CenteredPlaceholder("Playlists placeholder")
+
+@Composable
+private fun CenteredPlaceholder(text: String) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Text(text)
+    }
+}
