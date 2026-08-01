@@ -1,6 +1,8 @@
 package com.yplayer.ui.screens.albums
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -14,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import com.yplayer.YPlayerApp
 import com.yplayer.data.model.Album
 import com.yplayer.ui.components.AlbumArt
 import com.yplayer.ui.components.EmptyState
+import com.yplayer.ui.motion.pressScale
 
 @Composable
 fun AlbumsScreen(
@@ -59,10 +63,16 @@ fun AlbumsScreen(
 
 @Composable
 private fun AlbumCard(album: Album, onClick: () -> Unit) {
+    val interactionSource = remember { MutableInteractionSource() }
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
+            .clickable(
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+                onClick = onClick,
+            )
+            .pressScale(interactionSource),
     ) {
         AlbumArt(albumId = album.id, songUri = album.songs.firstOrNull()?.uri, modifier = Modifier.fillMaxWidth())
         Text(

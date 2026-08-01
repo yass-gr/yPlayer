@@ -1,6 +1,8 @@
 package com.yplayer.ui.components
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,11 +15,15 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.yplayer.data.model.Song
+import com.yplayer.ui.motion.listEntrance
+import com.yplayer.ui.motion.pressScale
+import com.yplayer.ui.motion.shouldReduceMotion
 
 @Composable
 fun SongList(songs: List<Song>, onSongClick: (Int) -> Unit, emptyMessage: String = "No songs") {
@@ -47,11 +53,19 @@ fun PlayableSongList(
 
 @Composable
 fun SongRow(song: Song, onClick: () -> Unit) {
+    val reducedMotion = shouldReduceMotion()
+    val interactionSource = remember { MutableInteractionSource() }
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .testTag("songRow")
-            .clickable(onClick = onClick)
+            .listEntrance(reducedMotion)
+            .pressScale(interactionSource)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = LocalIndication.current,
+                onClick = onClick,
+            )
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {

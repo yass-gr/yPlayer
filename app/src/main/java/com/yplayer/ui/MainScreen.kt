@@ -1,6 +1,10 @@
 package com.yplayer.ui
 
 import android.net.Uri
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -35,6 +39,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.yplayer.YPlayerApp
+import com.yplayer.ui.motion.MotionSpecs
 import com.yplayer.ui.screens.albumdetail.AlbumDetailScreen
 import com.yplayer.ui.screens.albums.AlbumsScreen
 import com.yplayer.ui.screens.artistdetail.ArtistDetailScreen
@@ -106,6 +111,22 @@ fun MainScreen() {
                     navController = navController,
                     startDestination = "songs",
                     modifier = Modifier.padding(padding),
+                    enterTransition = {
+                        fadeIn(animationSpec = MotionSpecs.Settle) +
+                            slideInVertically(animationSpec = MotionSpecs.SettleOffset, initialOffsetY = { it / 12 })
+                    },
+                    exitTransition = {
+                        fadeOut(animationSpec = MotionSpecs.Settle) +
+                            slideOutVertically(animationSpec = MotionSpecs.SettleOffset, targetOffsetY = { -it / 12 })
+                    },
+                    popEnterTransition = {
+                        fadeIn(animationSpec = MotionSpecs.Settle) +
+                            slideInVertically(animationSpec = MotionSpecs.SettleOffset, initialOffsetY = { -it / 12 })
+                    },
+                    popExitTransition = {
+                        fadeOut(animationSpec = MotionSpecs.Settle) +
+                            slideOutVertically(animationSpec = MotionSpecs.SettleOffset, targetOffsetY = { it / 12 })
+                    },
                 ) {
                     composable("songs") { SongsScreen() }
                     composable("albums") {
