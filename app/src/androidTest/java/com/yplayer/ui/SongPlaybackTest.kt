@@ -4,6 +4,7 @@ import android.Manifest
 import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.rule.GrantPermissionRule
@@ -25,7 +26,7 @@ class SongPlaybackTest {
     )
 
     @Test
-    fun tappingFirstSongNavigatesAndStartsPlayback() {
+    fun tappingSongShowsMiniPlayerAndExpandsSheet() {
         composeRule.waitUntil(timeoutMillis = 15_000) {
             composeRule.onAllNodes(hasTestTag("songRow")).fetchSemanticsNodes().isNotEmpty()
         }
@@ -35,6 +36,14 @@ class SongPlaybackTest {
         composeRule.waitUntil(timeoutMillis = 10_000) {
             runCatching {
                 composeRule.onNodeWithContentDescription("Pause").assertExists()
+            }.isSuccess
+        }
+
+        composeRule.onNodeWithTag("miniPlayer").performClick()
+
+        composeRule.waitUntil(timeoutMillis = 5_000) {
+            runCatching {
+                composeRule.onNodeWithContentDescription("Shuffle").assertExists()
             }.isSuccess
         }
     }
