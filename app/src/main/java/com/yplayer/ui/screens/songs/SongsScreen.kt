@@ -1,5 +1,8 @@
 package com.yplayer.ui.screens.songs
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -10,6 +13,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.ui.components.SongList
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SongsScreen(
     onSongClick: (Int) -> Unit = {},
@@ -23,5 +27,12 @@ fun SongsScreen(
     ),
 ) {
     val songs by viewModel.songs.collectAsStateWithLifecycle()
-    SongList(songs = songs, onSongClick = onSongClick)
+    val refreshState = rememberPullToRefreshState()
+    PullToRefreshBox(
+        isRefreshing = false,
+        state = refreshState,
+        onRefresh = viewModel::refresh,
+    ) {
+        SongList(songs = songs, onSongClick = onSongClick)
+    }
 }

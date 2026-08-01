@@ -19,10 +19,14 @@ import androidx.compose.ui.unit.dp
 import com.yplayer.data.model.Song
 
 @Composable
-fun SongList(songs: List<Song>, onSongClick: (Int) -> Unit) {
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        itemsIndexed(songs, key = { _, song -> song.id }) { index, song ->
-            SongRow(song = song, onClick = { onSongClick(index) })
+fun SongList(songs: List<Song>, onSongClick: (Int) -> Unit, emptyMessage: String = "No songs") {
+    if (songs.isEmpty()) {
+        EmptyState(emptyMessage)
+    } else {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            itemsIndexed(songs, key = { _, song -> song.id }) { index, song ->
+                SongRow(song = song, onClick = { onSongClick(index) })
+            }
         }
     }
 }

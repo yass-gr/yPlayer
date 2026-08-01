@@ -25,4 +25,8 @@ class SongsViewModel(
             playbackController.playQueue(list, index)
         }
     }
+
+    fun refresh() {
+        viewModelScope.launch { repository.refresh() }
+    }
 }

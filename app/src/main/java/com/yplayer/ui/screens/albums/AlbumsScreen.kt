@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.data.model.Album
 import com.yplayer.ui.components.AlbumArt
+import com.yplayer.ui.components.EmptyState
 
 @Composable
 fun AlbumsScreen(
@@ -39,15 +40,19 @@ fun AlbumsScreen(
     ),
 ) {
     val albums by viewModel.albums.collectAsStateWithLifecycle()
-    LazyVerticalGrid(
-        columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
-        items(albums, key = { it.id }) { album ->
-            AlbumCard(album = album, onClick = { onAlbumClick(album) })
+    if (albums.isEmpty()) {
+        EmptyState("No albums", "Songs are grouped into albums automatically.")
+    } else {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            items(albums, key = { it.id }) { album ->
+                AlbumCard(album = album, onClick = { onAlbumClick(album) })
+            }
         }
     }
 }

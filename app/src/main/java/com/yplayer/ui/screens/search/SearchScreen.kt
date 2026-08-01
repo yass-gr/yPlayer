@@ -28,6 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
+import com.yplayer.ui.components.EmptyState
 import com.yplayer.ui.components.SongList
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -82,7 +83,11 @@ fun SearchScreen(
         },
     ) { padding ->
         Column(modifier = Modifier.fillMaxSize().padding(padding)) {
-            SongList(songs = results, onSongClick = onSongClick)
+            if (results.isEmpty() && text.isNotBlank()) {
+                EmptyState("No results for \"$text\"")
+            } else {
+                SongList(songs = results, onSongClick = onSongClick)
+            }
         }
     }
 }

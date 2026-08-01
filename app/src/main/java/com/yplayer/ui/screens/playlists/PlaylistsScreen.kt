@@ -33,6 +33,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.data.playlist.Playlist
+import com.yplayer.ui.components.EmptyState
 
 @Composable
 fun PlaylistsScreen(
@@ -56,26 +57,34 @@ fun PlaylistsScreen(
             }
         },
     ) { padding ->
-        LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
-            items(playlists, key = { it.id }) { playlist ->
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable { onPlaylistClick(playlist) }
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.QueueMusic,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                    Text(
-                        text = playlist.name,
-                        style = MaterialTheme.typography.titleMedium,
-                        modifier = Modifier.padding(top = 4.dp),
-                    )
+        if (playlists.isEmpty()) {
+            EmptyState(
+                title = "No playlists",
+                message = "Create your first playlist with the + button.",
+                modifier = Modifier.padding(padding),
+            )
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize().padding(padding)) {
+                items(playlists, key = { it.id }) { playlist ->
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable { onPlaylistClick(playlist) }
+                            .padding(horizontal = 16.dp, vertical = 12.dp),
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.QueueMusic,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                        )
+                        Text(
+                            text = playlist.name,
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier.padding(top = 4.dp),
+                        )
+                    }
+                    HorizontalDivider(modifier = Modifier.padding(start = 16.dp))
                 }
-                HorizontalDivider(modifier = Modifier.padding(start = 16.dp))
             }
         }
     }

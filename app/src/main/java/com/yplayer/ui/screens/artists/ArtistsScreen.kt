@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.data.model.Artist
+import com.yplayer.ui.components.EmptyState
 
 @Composable
 fun ArtistsScreen(
@@ -38,31 +39,35 @@ fun ArtistsScreen(
     ),
 ) {
     val artists by viewModel.artists.collectAsStateWithLifecycle()
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
-        items(artists, key = { it.name }) { artist ->
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable { onArtistClick(artist) }
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Face,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-                Text(
-                    text = artist.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    modifier = Modifier.padding(top = 4.dp),
-                )
-                Text(
-                    text = "${artist.songs.size} songs",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+    if (artists.isEmpty()) {
+        EmptyState("No artists")
+    } else {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(artists, key = { it.name }) { artist ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onArtistClick(artist) }
+                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Face,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                    Text(
+                        text = artist.name,
+                        style = MaterialTheme.typography.titleMedium,
+                        modifier = Modifier.padding(top = 4.dp),
+                    )
+                    Text(
+                        text = "${artist.songs.size} songs",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                HorizontalDivider(modifier = Modifier.padding(start = 16.dp))
             }
-            HorizontalDivider(modifier = Modifier.padding(start = 16.dp))
         }
     }
 }
