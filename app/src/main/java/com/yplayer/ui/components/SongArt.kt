@@ -47,9 +47,11 @@ class SongArtFetcher(
 
         val bytes = try {
             val bitmap = loadArt(context, data) ?: placeholderBitmap()
-            val encoded = encodePng(bitmap)
-            bitmap.recycle()
-            encoded
+            try {
+                encodePng(bitmap)
+            } finally {
+                bitmap.recycle()
+            }
         } catch (e: OutOfMemoryError) {
             return null
         }
