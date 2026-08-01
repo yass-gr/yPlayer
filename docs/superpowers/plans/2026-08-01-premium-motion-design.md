@@ -1789,15 +1789,17 @@ git commit -m "update playback test for mini player and sheet expansion"
 **Files:**
 - None (verification only)
 
-- [ ] **Step 1: Run the full unit test suite**
+- [x] **Step 1: Run the full unit test suite**
 
 Run: `./gradlew :app:testDebugUnitTest`
 Expected: all tests PASS (motion math, sheet interrupt, playlist/library/ViewModel tests).
+Result: PASS — 35 tests across 13 classes (after removing stale `NowPlayingViewModelTest.kt` that referenced the deleted ViewModel).
 
-- [ ] **Step 2: Run lint**
+- [x] **Step 2: Run lint**
 
 Run: `./gradlew :app:lintDebug`
 Expected: no errors introduced by this change (address any that surface).
+Result: PASS — fixed 2 pre-existing `UnsafeOptInUsageError`s in `MediaItemMapper.kt` by adding `@OptIn(UnstableApi::class)`.
 
 - [ ] **Step 3: Manual smoke check (device)**
 
@@ -1810,7 +1812,9 @@ On a device/emulator:
 6. Pull-to-refresh and scrolling lists stay smooth (artwork cached, no per-row decode).
 7. Enable "Remove animations" in Developer Options → re-run; sheet snaps instead of springing, no rotation.
 
-- [ ] **Step 4: Final commit of any stragglers**
+(Not run — no device/emulator connected. Verified via `:app:compileDebugAndroidTestKotlin` instead.)
+
+- [x] **Step 4: Final commit of any stragglers**
 
 ```bash
 git add -A
