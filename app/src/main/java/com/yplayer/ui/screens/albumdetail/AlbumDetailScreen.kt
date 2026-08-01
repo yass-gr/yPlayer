@@ -38,7 +38,6 @@ fun AlbumDetailScreen(
     albumTitle: String,
     albumArtist: String,
     onBack: () -> Unit,
-    onPlaybackStarted: () -> Unit = {},
     viewModel: AlbumDetailViewModel = viewModel(
         key = "album-$albumId",
         factory = viewModelFactory {
@@ -77,10 +76,7 @@ fun AlbumDetailScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             FilledIconButton(
-                onClick = {
-                    viewModel.playSong(0)
-                    onPlaybackStarted()
-                },
+                onClick = { viewModel.playSong(0) },
                 modifier = Modifier.padding(16.dp),
             ) {
                 Icon(Icons.Filled.PlayArrow, contentDescription = "Play album")
@@ -88,7 +84,6 @@ fun AlbumDetailScreen(
             PlayableSongList(
                 songs = songs,
                 onPlay = viewModel::playSong,
-                onPlaybackStarted = onPlaybackStarted,
             )
         }
     }

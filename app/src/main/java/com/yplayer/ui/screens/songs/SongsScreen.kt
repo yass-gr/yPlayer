@@ -16,7 +16,6 @@ import com.yplayer.ui.components.PlayableSongList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SongsScreen(
-    onPlaybackStarted: () -> Unit = {},
     viewModel: SongsViewModel = viewModel(
         factory = viewModelFactory {
             initializer {
@@ -36,7 +35,6 @@ fun SongsScreen(
         PlayableSongList(
             songs = songs,
             onPlay = viewModel::playSong,
-            onPlaybackStarted = onPlaybackStarted,
         )
     }
 }

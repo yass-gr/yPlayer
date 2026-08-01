@@ -36,16 +36,12 @@ fun SongList(songs: List<Song>, onSongClick: (Int) -> Unit, emptyMessage: String
 fun PlayableSongList(
     songs: List<Song>,
     onPlay: (Int) -> Unit,
-    onPlaybackStarted: () -> Unit,
     emptyMessage: String = "No songs",
 ) {
     SongList(
         songs = songs,
         emptyMessage = emptyMessage,
-        onSongClick = { index ->
-            onPlay(index)
-            onPlaybackStarted()
-        },
+        onSongClick = onPlay,
     )
 }
 

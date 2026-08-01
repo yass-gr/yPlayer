@@ -35,7 +35,6 @@ import com.yplayer.ui.components.PlayableSongList
 @Composable
 fun SearchScreen(
     onBack: () -> Unit,
-    onPlaybackStarted: () -> Unit = {},
     viewModel: SearchViewModel = viewModel(
         factory = viewModelFactory {
             initializer {
@@ -89,7 +88,6 @@ fun SearchScreen(
                 PlayableSongList(
                     songs = results,
                     onPlay = viewModel::playSong,
-                    onPlaybackStarted = onPlaybackStarted,
                 )
             }
         }

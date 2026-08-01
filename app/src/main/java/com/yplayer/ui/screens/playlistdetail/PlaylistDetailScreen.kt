@@ -51,7 +51,6 @@ fun PlaylistDetailScreen(
     playlistId: Long,
     playlistName: String,
     onBack: () -> Unit,
-    onPlaybackStarted: () -> Unit = {},
     viewModel: PlaylistDetailViewModel = viewModel(
         key = "playlist-$playlistId",
         factory = viewModelFactory {
@@ -95,10 +94,7 @@ fun PlaylistDetailScreen(
                 items(songs, key = { it.id }) { song ->
                     PlaylistSongRow(
                         song = song,
-                        onPlay = {
-                            viewModel.playSong(songs.indexOf(song))
-                            onPlaybackStarted()
-                        },
+                        onPlay = { viewModel.playSong(songs.indexOf(song)) },
                         onRemove = { viewModel.removeSong(songs.indexOf(song)) },
                         onMoveUp = { viewModel.moveSong(songs.indexOf(song), songs.indexOf(song) - 1) },
                         onMoveDown = { viewModel.moveSong(songs.indexOf(song), songs.indexOf(song) + 1) },

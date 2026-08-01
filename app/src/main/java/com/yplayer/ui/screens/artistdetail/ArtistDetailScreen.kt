@@ -29,7 +29,6 @@ import com.yplayer.ui.components.PlayableSongList
 fun ArtistDetailScreen(
     artistName: String,
     onBack: () -> Unit,
-    onPlaybackStarted: () -> Unit = {},
     viewModel: ArtistDetailViewModel = viewModel(
         key = "artist-$artistName",
         factory = viewModelFactory {
@@ -63,7 +62,6 @@ fun ArtistDetailScreen(
             PlayableSongList(
                 songs = songs,
                 onPlay = viewModel::playSong,
-                onPlaybackStarted = onPlaybackStarted,
             )
         }
     }
