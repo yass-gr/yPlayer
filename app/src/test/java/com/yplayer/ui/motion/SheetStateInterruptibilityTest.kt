@@ -19,12 +19,14 @@ class SheetStateInterruptibilityTest {
     fun reDragMidSettleCancelsSpringAndSnapsToFinger() = runComposeUiTest {
         lateinit var state: SheetState
         setContent { state = rememberSheetState() }
+        mainClock.autoAdvance = false
 
         runOnIdle { state.expand() }
         mainClock.advanceTimeBy(100)
 
         runOnIdle {
             state.onDragStart()
+            assertTrue("drag start must stop the running spring", !state.progress.isRunning)
             state.applyDrag(-1f)
         }
         mainClock.advanceTimeBy(1000)
