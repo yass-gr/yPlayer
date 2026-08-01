@@ -32,6 +32,10 @@ import kotlinx.coroutines.withContext
 private fun albumArtUri(albumId: Long): Uri =
     ContentUris.withAppendedId(Uri.parse("content://media/external/audio/albumart"), albumId)
 
+private fun loadSongArt(context: Context, songUri: Uri): Bitmap? = runCatching {
+    context.contentResolver.loadThumbnail(songUri, Size(512, 512), null)
+}.getOrNull()
+
 private fun loadAlbumArt(context: Context, albumId: Long): Bitmap? = runCatching {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         context.contentResolver.loadThumbnail(albumArtUri(albumId), Size(512, 512), null)
@@ -46,12 +50,19 @@ private fun loadAlbumArt(context: Context, albumId: Long): Bitmap? = runCatching
 @Composable
 fun AlbumArt(
     albumId: Long,
+    songUri: Uri? = null,
     modifier: Modifier = Modifier,
     cornerRadius: Int = 8,
 ) {
     val context = LocalContext.current
-    val bitmap by produceState<Bitmap?>(initialValue = null, albumId) {
-        value = withContext(Dispatchers.IO) { loadAlbumArt(context, albumId) }
+    val bitmap by produceState<Bitmap?>(initialValue = null, albumId, songUri) {
+        value = withContext(Dispatchers.IO) {
+            if (songUri != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                loadSongArt(context, songUri) ?: loadAlbumArt(context, albumId)
+            } else {
+                loadAlbumArt(context, albumId)
+            }
+        }
     }
     Box(
         modifier = modifier

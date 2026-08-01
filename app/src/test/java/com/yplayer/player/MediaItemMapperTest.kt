@@ -20,6 +20,7 @@ class MediaItemMapperTest {
         val item = song.toMediaItem()
 
         assertEquals("content://media/external/audio/media/42", item.mediaId)
+        assertEquals("content://media/external/audio/media/42", item.localConfiguration?.uri?.toString())
         assertEquals("Blinding Lights", item.mediaMetadata.title)
         assertEquals("The Weeknd", item.mediaMetadata.artist)
         assertEquals("After Hours", item.mediaMetadata.albumTitle)

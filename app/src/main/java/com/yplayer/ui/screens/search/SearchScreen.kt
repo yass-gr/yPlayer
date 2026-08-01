@@ -29,13 +29,13 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.ui.components.EmptyState
-import com.yplayer.ui.components.SongList
+import com.yplayer.ui.components.PlayableSongList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     onBack: () -> Unit,
-    onSongClick: (Int) -> Unit = {},
+    onPlaybackStarted: () -> Unit = {},
     viewModel: SearchViewModel = viewModel(
         factory = viewModelFactory {
             initializer {
@@ -86,7 +86,11 @@ fun SearchScreen(
             if (results.isEmpty() && text.isNotBlank()) {
                 EmptyState("No results for \"$text\"")
             } else {
-                SongList(songs = results, onSongClick = onSongClick)
+                PlayableSongList(
+                    songs = results,
+                    onPlay = viewModel::playSong,
+                    onPlaybackStarted = onPlaybackStarted,
+                )
             }
         }
     }

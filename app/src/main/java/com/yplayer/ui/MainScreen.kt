@@ -91,7 +91,9 @@ fun MainScreen() {
                 startDestination = "songs",
                 modifier = Modifier.padding(padding),
             ) {
-                composable("songs") { SongsScreen() }
+                composable("songs") {
+                    SongsScreen(onPlaybackStarted = { navController.navigate("nowPlaying") })
+                }
                 composable("albums") {
                     AlbumsScreen(onAlbumClick = { album ->
                         navController.navigate(
@@ -112,7 +114,7 @@ fun MainScreen() {
                 composable("search") {
                     SearchScreen(
                         onBack = { navController.popBackStack() },
-                        onSongClick = { navController.navigate("nowPlaying") },
+                        onPlaybackStarted = { navController.navigate("nowPlaying") },
                     )
                 }
                 composable(
@@ -131,7 +133,7 @@ fun MainScreen() {
                         albumTitle = title,
                         albumArtist = artist,
                         onBack = { navController.popBackStack() },
-                        onSongClick = { index -> navController.navigate("nowPlaying") },
+                        onPlaybackStarted = { navController.navigate("nowPlaying") },
                     )
                 }
                 composable(
@@ -142,7 +144,7 @@ fun MainScreen() {
                     ArtistDetailScreen(
                         artistName = name,
                         onBack = { navController.popBackStack() },
-                        onSongClick = { index -> navController.navigate("nowPlaying") },
+                        onPlaybackStarted = { navController.navigate("nowPlaying") },
                     )
                 }
                 composable("nowPlaying") { NowPlayingScreen() }
@@ -159,6 +161,7 @@ fun MainScreen() {
                         playlistId = playlistId,
                         playlistName = name,
                         onBack = { navController.popBackStack() },
+                        onPlaybackStarted = { navController.navigate("nowPlaying") },
                     )
                 }
             }

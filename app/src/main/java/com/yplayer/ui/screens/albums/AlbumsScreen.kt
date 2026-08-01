@@ -64,7 +64,7 @@ private fun AlbumCard(album: Album, onClick: () -> Unit) {
             .fillMaxWidth()
             .clickable(onClick = onClick),
     ) {
-        AlbumArt(albumId = album.id, modifier = Modifier.fillMaxWidth())
+        AlbumArt(albumId = album.id, songUri = album.songs.firstOrNull()?.uri, modifier = Modifier.fillMaxWidth())
         Text(
             text = album.title,
             style = MaterialTheme.typography.titleSmall,

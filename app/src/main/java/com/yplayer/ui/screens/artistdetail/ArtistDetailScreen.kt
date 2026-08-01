@@ -22,14 +22,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
-import com.yplayer.ui.components.SongList
+import com.yplayer.ui.components.PlayableSongList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ArtistDetailScreen(
     artistName: String,
     onBack: () -> Unit,
-    onSongClick: (Int) -> Unit = {},
+    onPlaybackStarted: () -> Unit = {},
     viewModel: ArtistDetailViewModel = viewModel(
         key = "artist-$artistName",
         factory = viewModelFactory {
@@ -60,7 +60,11 @@ fun ArtistDetailScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
             )
-            SongList(songs = songs, onSongClick = onSongClick)
+            PlayableSongList(
+                songs = songs,
+                onPlay = viewModel::playSong,
+                onPlaybackStarted = onPlaybackStarted,
+            )
         }
     }
 }

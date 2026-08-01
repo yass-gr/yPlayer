@@ -58,6 +58,7 @@ fun NowPlayingScreen(
     ) {
         AlbumArt(
             albumId = song?.albumId ?: 0L,
+            songUri = song?.uri,
             modifier = Modifier.fillMaxWidth().weight(1f),
         )
         Text(
@@ -98,7 +99,7 @@ fun NowPlayingScreen(
             )
         }
         Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+            modifier = Modifier.padding(top = 24.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = { viewModel.setShuffle(!state.isShuffle) }) {

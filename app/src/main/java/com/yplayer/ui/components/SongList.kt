@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.yplayer.data.model.Song
 
@@ -32,16 +33,35 @@ fun SongList(songs: List<Song>, onSongClick: (Int) -> Unit, emptyMessage: String
 }
 
 @Composable
+fun PlayableSongList(
+    songs: List<Song>,
+    onPlay: (Int) -> Unit,
+    onPlaybackStarted: () -> Unit,
+    emptyMessage: String = "No songs",
+) {
+    SongList(
+        songs = songs,
+        emptyMessage = emptyMessage,
+        onSongClick = { index ->
+            onPlay(index)
+            onPlaybackStarted()
+        },
+    )
+}
+
+@Composable
 fun SongRow(song: Song, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .testTag("songRow")
             .clickable(onClick = onClick)
             .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         AlbumArt(
             albumId = song.albumId,
+            songUri = song.uri,
             modifier = Modifier.size(48.dp),
         )
         Column(modifier = Modifier.padding(start = 12.dp).weight(1f)) {

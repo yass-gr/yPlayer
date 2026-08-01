@@ -11,12 +11,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
-import com.yplayer.ui.components.SongList
+import com.yplayer.ui.components.PlayableSongList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SongsScreen(
-    onSongClick: (Int) -> Unit = {},
+    onPlaybackStarted: () -> Unit = {},
     viewModel: SongsViewModel = viewModel(
         factory = viewModelFactory {
             initializer {
@@ -33,6 +33,10 @@ fun SongsScreen(
         state = refreshState,
         onRefresh = viewModel::refresh,
     ) {
-        SongList(songs = songs, onSongClick = onSongClick)
+        PlayableSongList(
+            songs = songs,
+            onPlay = viewModel::playSong,
+            onPlaybackStarted = onPlaybackStarted,
+        )
     }
 }

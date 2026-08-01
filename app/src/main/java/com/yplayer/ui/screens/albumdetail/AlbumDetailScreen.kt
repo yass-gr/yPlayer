@@ -29,7 +29,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.yplayer.YPlayerApp
 import com.yplayer.ui.components.AlbumArt
-import com.yplayer.ui.components.SongList
+import com.yplayer.ui.components.PlayableSongList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +38,7 @@ fun AlbumDetailScreen(
     albumTitle: String,
     albumArtist: String,
     onBack: () -> Unit,
-    onSongClick: (Int) -> Unit = {},
+    onPlaybackStarted: () -> Unit = {},
     viewModel: AlbumDetailViewModel = viewModel(
         key = "album-$albumId",
         factory = viewModelFactory {
@@ -69,7 +69,7 @@ fun AlbumDetailScreen(
                     .padding(24.dp),
                 contentAlignment = Alignment.Center,
             ) {
-                AlbumArt(albumId = albumId, modifier = Modifier.size(200.dp))
+                AlbumArt(albumId = albumId, songUri = songs.firstOrNull()?.uri, modifier = Modifier.size(200.dp))
             }
             Text(
                 text = albumArtist,
@@ -77,12 +77,19 @@ fun AlbumDetailScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
             FilledIconButton(
-                onClick = { onSongClick(0) },
+                onClick = {
+                    viewModel.playSong(0)
+                    onPlaybackStarted()
+                },
                 modifier = Modifier.padding(16.dp),
             ) {
                 Icon(Icons.Filled.PlayArrow, contentDescription = "Play album")
             }
-            SongList(songs = songs, onSongClick = onSongClick)
+            PlayableSongList(
+                songs = songs,
+                onPlay = viewModel::playSong,
+                onPlaybackStarted = onPlaybackStarted,
+            )
         }
     }
 }

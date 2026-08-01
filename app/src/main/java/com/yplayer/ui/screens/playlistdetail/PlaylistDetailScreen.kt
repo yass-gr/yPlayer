@@ -51,6 +51,7 @@ fun PlaylistDetailScreen(
     playlistId: Long,
     playlistName: String,
     onBack: () -> Unit,
+    onPlaybackStarted: () -> Unit = {},
     viewModel: PlaylistDetailViewModel = viewModel(
         key = "playlist-$playlistId",
         factory = viewModelFactory {
@@ -94,7 +95,10 @@ fun PlaylistDetailScreen(
                 items(songs, key = { it.id }) { song ->
                     PlaylistSongRow(
                         song = song,
-                        onPlay = { viewModel.playSong(songs.indexOf(song)) },
+                        onPlay = {
+                            viewModel.playSong(songs.indexOf(song))
+                            onPlaybackStarted()
+                        },
                         onRemove = { viewModel.removeSong(songs.indexOf(song)) },
                         onMoveUp = { viewModel.moveSong(songs.indexOf(song), songs.indexOf(song) - 1) },
                         onMoveDown = { viewModel.moveSong(songs.indexOf(song), songs.indexOf(song) + 1) },
@@ -129,7 +133,7 @@ private fun PlaylistSongRow(
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        AlbumArt(albumId = song.albumId, modifier = Modifier.size(48.dp))
+        AlbumArt(albumId = song.albumId, songUri = song.uri, modifier = Modifier.size(48.dp))
         Column(modifier = Modifier.padding(start = 12.dp).weight(1f)) {
             Text(song.title, style = MaterialTheme.typography.bodyLarge, maxLines = 1)
             Text(

@@ -9,6 +9,7 @@ import com.yplayer.data.model.Song
 
 fun Song.toMediaItem(): MediaItem = MediaItem.Builder()
     .setMediaId(uri.toString())
+    .setUri(uri)
     .setMediaMetadata(
         MediaMetadata.Builder()
             .setTitle(title)
